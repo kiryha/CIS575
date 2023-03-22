@@ -11,7 +11,6 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from ui import ui_assembler_main
 from ui import ui_assembler_settings
-from ui import ui_assembler_project
 
 from modules.database import init
 from modules.database import database
@@ -57,33 +56,6 @@ class SettingsUI(QtWidgets.QDialog, ui_assembler_settings.Ui_Settings):
                                     self.linFinalPages.text(),
                                     self.linPDFfiles.text(),
                                     self.linSQLfile.text())
-
-
-class CreateProject(QtWidgets.QDialog, ui_assembler_project.Ui_CreateProject):
-    """
-    Class to set Book Assembler project
-    """
-
-    def __init__(self, parent=None):
-        # SETUP UI WINDOW
-        super(CreateProject, self).__init__(parent=parent)
-        self.setupUi(self)
-        self.parent = parent
-
-        # UI functionality
-        self.btnCreateProject.clicked.connect(self.create_project)
-        self.btnCreateProject.clicked.connect(self.close)
-
-    def showEvent(self, event):
-        """
-        Read settings from settings.json and fill UI
-        """
-
-        pass
-
-    def create_project(self):
-
-        self.parent.create_project()
 
 
 class AlignDelegate(QtWidgets.QItemDelegate):
@@ -221,25 +193,17 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.tabPages.horizontalHeader().setStretchLastSection(True)
         self.tabPages.setItemDelegate(AlignDelegate())
 
-        # Projects
-        self.empty_project = '------------------------------------'
-        self.comProjects.addItem(self.empty_project)
-        self.project_creator = CreateProject(self)
-
         # Data
         self.book = None
         self.book_model = None
         self.current_version = None  # UI [ +/- ] counter for selected page
 
         # Populate data
-        # self.init_ui()
+        self.init_ui()
 
         # Setup UI
         self.actionSettings.triggered.connect(self.edit_settings)
         self.actionDocumentation.triggered.connect(self.help)
-
-        self.btnCreateNewProject.clicked.connect(lambda: self.project_creator.exec_())
-        self.comProjects.currentIndexChanged.connect(self.init_project)
 
         self.tabPages.clicked.connect(self.show_page)
 
@@ -251,10 +215,6 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.btnGeneratePDF.clicked.connect(self.generate_pdf)
 
     # UI setup
-    def init_project(self):
-
-        print(self.comProjects.currentText())
-
     def init_ui(self):
         """
         Read data from database, read files from disc, output data to UI

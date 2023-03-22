@@ -34,24 +34,19 @@ class Ui_Assembler(object):
         self.groupBox_2.setMaximumSize(QSize(16777215, 90))
         self.verticalLayout_4 = QVBoxLayout(self.groupBox_2)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.btnCreateNewProject = QPushButton(self.groupBox_2)
-        self.btnCreateNewProject.setObjectName(u"btnCreateNewProject")
-        self.btnCreateNewProject.setMinimumSize(QSize(0, 35))
-
-        self.verticalLayout_4.addWidget(self.btnCreateNewProject)
-
         self.splitter_3 = QSplitter(self.groupBox_2)
         self.splitter_3.setObjectName(u"splitter_3")
         self.splitter_3.setOrientation(Qt.Horizontal)
-        self.label_2 = QLabel(self.splitter_3)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setMaximumSize(QSize(80, 16777215))
-        self.splitter_3.addWidget(self.label_2)
-        self.comProjects = QComboBox(self.splitter_3)
-        self.comProjects.setObjectName(u"comProjects")
-        self.splitter_3.addWidget(self.comProjects)
+        self.btnPickProject = QPushButton(self.splitter_3)
+        self.btnPickProject.setObjectName(u"btnPickProject")
+        self.splitter_3.addWidget(self.btnPickProject)
 
         self.verticalLayout_4.addWidget(self.splitter_3)
+
+        self.linProject = QLineEdit(self.groupBox_2)
+        self.linProject.setObjectName(u"linProject")
+
+        self.verticalLayout_4.addWidget(self.linProject)
 
         self.splitter_8.addWidget(self.groupBox_2)
         self.groupBox_3 = QGroupBox(self.splitter_8)
@@ -163,8 +158,7 @@ class Ui_Assembler(object):
         self.actionDocumentation.setText(QCoreApplication.translate("Assembler", u"Documentation", None))
         self.actionSettings.setText(QCoreApplication.translate("Assembler", u"Modify Settings", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("Assembler", u"Project", None))
-        self.btnCreateNewProject.setText(QCoreApplication.translate("Assembler", u"Create New Project", None))
-        self.label_2.setText(QCoreApplication.translate("Assembler", u"Current Project", None))
+        self.btnPickProject.setText(QCoreApplication.translate("Assembler", u"Pick Project", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("Assembler", u"Pages", None))
         self.btnDownVersion.setText(QCoreApplication.translate("Assembler", u"-", None))
         self.btnUpVersion.setText(QCoreApplication.translate("Assembler", u"+", None))

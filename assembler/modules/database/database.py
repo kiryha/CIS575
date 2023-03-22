@@ -53,20 +53,6 @@ class Converter:
         return snapshots
 
 
-class Project:
-    """
-    Class to represent a project object
-    """
-
-    def __init__(self, name, location, size_x, size_y):
-        self.id = None
-        self.name = name
-        self.location = location
-        self.size_x = size_x
-        self.size_y = size_y
-        self.description = ''
-
-
 class Page:
     """
     Class to represent a book page

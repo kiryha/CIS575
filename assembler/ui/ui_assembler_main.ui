@@ -32,36 +32,19 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QPushButton" name="btnCreateNewProject">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>35</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Create New Project</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QSplitter" name="splitter_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QLabel" name="label_2">
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>16777215</height>
-            </size>
-           </property>
+          <widget class="QPushButton" name="btnPickProject">
            <property name="text">
-            <string>Current Project</string>
+            <string>Pick Project</string>
            </property>
           </widget>
-          <widget class="QComboBox" name="comProjects"/>
          </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="linProject"/>
         </item>
        </layout>
       </widget>
