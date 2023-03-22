@@ -1,0 +1,26 @@
+{
+    "project_root": {
+        "string": "C:/Users/kko8/OneDrive/projects/master/CIS575/projects/alphabet",
+        "token": null
+    },
+    "versioned_pages": {
+        "string": "{}/pages/jpg",
+        "token": "project_root"
+    },
+    "final_pages": {
+        "string": "{}/pages/jpg/final",
+        "token": "project_root"
+    },
+    "pdf_files": {
+        "string": "{}/pages/pdf",
+        "token": "project_root"
+    },
+    "sql_file_path": {
+        "string": "{}/data/database.db",
+        "token": "assembler_root"
+    },
+    "jpeg_folder": {
+        "string": "1rgsj0IsRrk1jKjO1WfpnuJISiDgwze-O",
+        "token": null
+    }
+}
