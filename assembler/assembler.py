@@ -246,7 +246,7 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.btnUpVersion.clicked.connect(lambda: self.show_page(1))
         self.btnDownVersion.clicked.connect(lambda: self.show_page(-1))
         self.btnPublish.clicked.connect(self.publish_page)
-        self.btnReload.clicked.connect(self.init_ui)
+        # self.btnReload.clicked.connect(self.init_ui)
         self.btnSendPublished.clicked.connect(self.send_published)
         self.btnGeneratePDF.clicked.connect(self.generate_pdf)
 
