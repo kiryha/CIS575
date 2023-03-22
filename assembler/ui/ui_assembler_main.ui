@@ -20,34 +20,6 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>90</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Project</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QSplitter" name="splitter_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <widget class="QPushButton" name="btnPickProject">
-           <property name="text">
-            <string>Pick Project</string>
-           </property>
-          </widget>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="linProject"/>
-        </item>
-       </layout>
-      </widget>
       <widget class="QGroupBox" name="groupBox_3">
        <property name="minimumSize">
         <size>
