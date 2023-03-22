@@ -10,6 +10,15 @@ def build_database(sql_file_path):
     connection = sqlite3.connect(sql_file_path)
     cursor = connection.cursor()
 
+    cursor.execute('''CREATE TABLE projects (
+                        id integer primary key autoincrement,
+                        name text,
+                        location text,
+                        size_x integer,
+                        size_y integer,
+                        description text
+                        )''')
+
     cursor.execute('''CREATE TABLE pages (
                         id integer primary key autoincrement,
                         page_number text,
