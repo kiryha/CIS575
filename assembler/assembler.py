@@ -277,27 +277,6 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
 
         return file_path_out
 
-    def copy_file_to_drive(self, page, file_path_out):
-        """
-        Upload file to Google Drive
-        """
-
-        folder_token = {'q': "'{0}' in parents and trashed=false".format(settings_data.jpeg_folder)}
-        existing_pages = self.google_drive.ListFile(folder_token).GetList()
-
-        # Delete existing file
-        for existing_page in existing_pages:
-            if existing_page['title'] == '{0}.jpg'.format(page.page_number):
-                existing_page.Delete()
-
-        # Upload new file
-        google_file = self.google_drive.CreateFile({'parents': [{'id': settings_data.jpeg_folder}],
-                                               'title': '{0}.jpg'.format(page.page_number)})
-        google_file.SetContentFile(file_path_out)
-        google_file.Upload()
-
-        print('>> Page {0} uploaded.'.format(page.page_number))
-
     def get_selected_page_numbers(self):
         """
         Create a string list of selected pages
@@ -320,16 +299,6 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         settings.set_settings(project_folder, versioned_pages, final_pages, pdf_files, sql_file_path)
 
     # UI calls
-    def _create_project(self):
-
-        # self.project_creator.group = group
-
-        self.project_creator.exec_()
-
-    def create_project(self):
-
-        print('AAA')
-
     def edit_settings(self):
         """
         Launch Edit Setting window
@@ -464,9 +433,6 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
 
             # Copy file to local folder
             file_path_out = self.copy_file_locally(page, published_version)
-
-            # Upload file do google drive
-            # self.copy_file_to_drive(page, file_path_out)
 
         self.statusbar.showMessage('Copy complete!')
 
