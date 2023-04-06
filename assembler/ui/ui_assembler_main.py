@@ -17,7 +17,7 @@ class Ui_Assembler(object):
     def setupUi(self, Assembler):
         if not Assembler.objectName():
             Assembler.setObjectName(u"Assembler")
-        Assembler.resize(925, 892)
+        Assembler.resize(993, 892)
         self.actionDocumentation = QAction(Assembler)
         self.actionDocumentation.setObjectName(u"actionDocumentation")
         self.actionSettings = QAction(Assembler)
@@ -26,21 +26,41 @@ class Ui_Assembler(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.splitter_8 = QSplitter(self.centralwidget)
+        self.splitter = QSplitter(self.centralwidget)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Vertical)
+        self.groupBox_3 = QGroupBox(self.splitter)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        self.groupBox_3.setMaximumSize(QSize(16777215, 80))
+        self.verticalLayout = QVBoxLayout(self.groupBox_3)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.linCurrentProject = QLineEdit(self.groupBox_3)
+        self.linCurrentProject.setObjectName(u"linCurrentProject")
+        self.linCurrentProject.setEnabled(False)
+
+        self.verticalLayout.addWidget(self.linCurrentProject)
+
+        self.btnSetProject = QPushButton(self.groupBox_3)
+        self.btnSetProject.setObjectName(u"btnSetProject")
+
+        self.verticalLayout.addWidget(self.btnSetProject)
+
+        self.splitter.addWidget(self.groupBox_3)
+        self.splitter_8 = QSplitter(self.splitter)
         self.splitter_8.setObjectName(u"splitter_8")
         self.splitter_8.setOrientation(Qt.Vertical)
-        self.groupBox_3 = QGroupBox(self.splitter_8)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setMinimumSize(QSize(300, 0))
-        self.groupBox_3.setMaximumSize(QSize(300, 16777215))
-        self.verticalLayout_5 = QVBoxLayout(self.groupBox_3)
+        self.groupBox_4 = QGroupBox(self.splitter_8)
+        self.groupBox_4.setObjectName(u"groupBox_4")
+        self.groupBox_4.setMinimumSize(QSize(400, 0))
+        self.groupBox_4.setMaximumSize(QSize(400, 16777215))
+        self.verticalLayout_5 = QVBoxLayout(self.groupBox_4)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.tabPages = QTableView(self.groupBox_3)
+        self.tabPages = QTableView(self.groupBox_4)
         self.tabPages.setObjectName(u"tabPages")
 
         self.verticalLayout_5.addWidget(self.tabPages)
 
-        self.splitter_9 = QSplitter(self.groupBox_3)
+        self.splitter_9 = QSplitter(self.groupBox_4)
         self.splitter_9.setObjectName(u"splitter_9")
         self.splitter_9.setOrientation(Qt.Horizontal)
         self.btnDownVersion = QPushButton(self.splitter_9)
@@ -52,17 +72,17 @@ class Ui_Assembler(object):
 
         self.verticalLayout_5.addWidget(self.splitter_9)
 
-        self.btnPublish = QPushButton(self.groupBox_3)
+        self.btnPublish = QPushButton(self.groupBox_4)
         self.btnPublish.setObjectName(u"btnPublish")
 
         self.verticalLayout_5.addWidget(self.btnPublish)
 
-        self.btnReload = QPushButton(self.groupBox_3)
+        self.btnReload = QPushButton(self.groupBox_4)
         self.btnReload.setObjectName(u"btnReload")
 
         self.verticalLayout_5.addWidget(self.btnReload)
 
-        self.splitter_10 = QSplitter(self.groupBox_3)
+        self.splitter_10 = QSplitter(self.groupBox_4)
         self.splitter_10.setObjectName(u"splitter_10")
         self.splitter_10.setOrientation(Qt.Horizontal)
         self.chbSelected = QCheckBox(self.splitter_10)
@@ -76,7 +96,7 @@ class Ui_Assembler(object):
 
         self.verticalLayout_5.addWidget(self.splitter_10)
 
-        self.splitter_11 = QSplitter(self.groupBox_3)
+        self.splitter_11 = QSplitter(self.groupBox_4)
         self.splitter_11.setObjectName(u"splitter_11")
         self.splitter_11.setOrientation(Qt.Horizontal)
         self.linPDFVersion = QLineEdit(self.splitter_11)
@@ -90,9 +110,10 @@ class Ui_Assembler(object):
 
         self.verticalLayout_5.addWidget(self.splitter_11)
 
-        self.splitter_8.addWidget(self.groupBox_3)
+        self.splitter_8.addWidget(self.groupBox_4)
+        self.splitter.addWidget(self.splitter_8)
 
-        self.horizontalLayout.addWidget(self.splitter_8)
+        self.horizontalLayout.addWidget(self.splitter)
 
         self.grp_images = QGroupBox(self.centralwidget)
         self.grp_images.setObjectName(u"grp_images")
@@ -113,20 +134,16 @@ class Ui_Assembler(object):
         Assembler.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Assembler)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 925, 21))
+        self.menubar.setGeometry(QRect(0, 0, 993, 21))
         self.menuHelp = QMenu(self.menubar)
         self.menuHelp.setObjectName(u"menuHelp")
-        self.menuEdit = QMenu(self.menubar)
-        self.menuEdit.setObjectName(u"menuEdit")
         Assembler.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(Assembler)
         self.statusbar.setObjectName(u"statusbar")
         Assembler.setStatusBar(self.statusbar)
 
-        self.menubar.addAction(self.menuEdit.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
         self.menuHelp.addAction(self.actionDocumentation)
-        self.menuEdit.addAction(self.actionSettings)
 
         self.retranslateUi(Assembler)
 
@@ -137,7 +154,9 @@ class Ui_Assembler(object):
         Assembler.setWindowTitle(QCoreApplication.translate("Assembler", u"Book Assembler", None))
         self.actionDocumentation.setText(QCoreApplication.translate("Assembler", u"Documentation", None))
         self.actionSettings.setText(QCoreApplication.translate("Assembler", u"Modify Settings", None))
-        self.groupBox_3.setTitle(QCoreApplication.translate("Assembler", u"Pages", None))
+        self.groupBox_3.setTitle(QCoreApplication.translate("Assembler", u"Current Project", None))
+        self.btnSetProject.setText(QCoreApplication.translate("Assembler", u"Set Project", None))
+        self.groupBox_4.setTitle(QCoreApplication.translate("Assembler", u"Project Pages", None))
         self.btnDownVersion.setText(QCoreApplication.translate("Assembler", u"-", None))
         self.btnUpVersion.setText(QCoreApplication.translate("Assembler", u"+", None))
         self.btnPublish.setText(QCoreApplication.translate("Assembler", u"Publish Current Version", None))
@@ -149,6 +168,5 @@ class Ui_Assembler(object):
         self.grp_images.setTitle(QCoreApplication.translate("Assembler", u"Page Prewiew", None))
         self.labPage.setText("")
         self.menuHelp.setTitle(QCoreApplication.translate("Assembler", u"Help", None))
-        self.menuEdit.setTitle(QCoreApplication.translate("Assembler", u"Edit", None))
     # retranslateUi
 

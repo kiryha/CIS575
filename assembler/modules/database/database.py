@@ -4,11 +4,11 @@ Create Read Update Delete database entities
 Classes for database tables
 """
 
+import os
 import sqlite3
-from modules.settings import settings
-
-# Get path to the SQL database file
-settings = settings.get_settings()
+assembler_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))).replace('\\', '/')
+sql_file_path = f'{assembler_root}/data/database.db'
+# TODO: get from settings dynamically
 
 
 class Converter:
@@ -71,7 +71,7 @@ class Page:
         Update page data
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("UPDATE pages SET "
@@ -97,7 +97,7 @@ class Page:
         Get published version of the page
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM published "
@@ -117,7 +117,7 @@ class Page:
         Get sent version of the page
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM sent "
@@ -137,7 +137,7 @@ class Page:
         Get published snapshot for the page by page version
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM published "
@@ -160,7 +160,7 @@ class Page:
 
         snapshot = VersionSnapshot(self.id, version)
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("INSERT INTO published VALUES ("
@@ -187,7 +187,7 @@ class Page:
 
         snapshot = VersionSnapshot(self.id, version)
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("INSERT INTO sent VALUES ("
@@ -212,7 +212,7 @@ class Page:
         Get sent snapshot for the page by page version
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM sent "
@@ -281,7 +281,7 @@ class Book:
         Get page data by page id
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM pages WHERE "
@@ -300,7 +300,7 @@ class Book:
         Get page data by page number
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("SELECT * FROM pages WHERE "
@@ -319,7 +319,7 @@ class Book:
         Add page to the database
         """
 
-        connection = sqlite3.connect(settings.sql_file_path)
+        connection = sqlite3.connect(sql_file_path)
         cursor = connection.cursor()
 
         cursor.execute("INSERT INTO pages VALUES ("

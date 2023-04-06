@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>925</width>
+    <width>993</width>
     <height>892</height>
    </rect>
   </property>
@@ -16,114 +16,146 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QSplitter" name="splitter_8">
+     <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
       <widget class="QGroupBox" name="groupBox_3">
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>0</height>
-        </size>
-       </property>
        <property name="maximumSize">
         <size>
-         <width>300</width>
-         <height>16777215</height>
+         <width>16777215</width>
+         <height>80</height>
         </size>
        </property>
        <property name="title">
-        <string>Pages</string>
+        <string>Current Project</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QTableView" name="tabPages"/>
-        </item>
-        <item>
-         <widget class="QSplitter" name="splitter_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <widget class="QLineEdit" name="linCurrentProject">
+          <property name="enabled">
+           <bool>false</bool>
           </property>
-          <widget class="QPushButton" name="btnDownVersion">
-           <property name="text">
-            <string>-</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="btnUpVersion">
-           <property name="text">
-            <string>+</string>
-           </property>
-          </widget>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnPublish">
+         <widget class="QPushButton" name="btnSetProject">
           <property name="text">
-           <string>Publish Current Version</string>
+           <string>Set Project</string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnReload">
-          <property name="text">
-           <string>Reload Pages</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSplitter" name="splitter_10">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <widget class="QCheckBox" name="chbSelected">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>SEL</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="btnSendPublished">
-           <property name="text">
-            <string>Send Published Versions</string>
-           </property>
-          </widget>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSplitter" name="splitter_11">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <widget class="QLineEdit" name="linPDFVersion">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>01</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="btnGeneratePDF">
-           <property name="text">
-            <string>Generate PDF file</string>
-           </property>
-          </widget>
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QSplitter" name="splitter_8">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>Project Pages</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QTableView" name="tabPages"/>
+         </item>
+         <item>
+          <widget class="QSplitter" name="splitter_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QPushButton" name="btnDownVersion">
+            <property name="text">
+             <string>-</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnUpVersion">
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnPublish">
+           <property name="text">
+            <string>Publish Current Version</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnReload">
+           <property name="text">
+            <string>Reload Pages</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSplitter" name="splitter_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QCheckBox" name="chbSelected">
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>SEL</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnSendPublished">
+            <property name="text">
+             <string>Send Published Versions</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSplitter" name="splitter_11">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QLineEdit" name="linPDFVersion">
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>01</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnGeneratePDF">
+            <property name="text">
+             <string>Generate PDF file</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -163,7 +195,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>925</width>
+     <width>993</width>
      <height>21</height>
     </rect>
    </property>
@@ -173,13 +205,6 @@
     </property>
     <addaction name="actionDocumentation"/>
    </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionSettings"/>
-   </widget>
-   <addaction name="menuEdit"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

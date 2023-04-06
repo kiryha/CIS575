@@ -5,57 +5,18 @@ Book Assembler main module
 
 import os
 import glob
+import json
 import webbrowser
 from shutil import copyfile
 from PySide2 import QtCore, QtGui, QtWidgets
 
 from ui import ui_assembler_main
-from ui import ui_assembler_settings
 
 from modules.database import init
 from modules.database import database
-from modules.settings import settings
 from modules.pdf import pdf
 
 assembler_root = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
-
-
-class SettingsUI(QtWidgets.QDialog, ui_assembler_settings.Ui_Settings):
-    """
-    Class to edit Book Assembler settings by user
-    """
-
-    def __init__(self, parent=None):
-        # SETUP UI WINDOW
-        super(SettingsUI, self).__init__(parent=parent)
-        self.setupUi(self)
-        self.parent = parent
-
-        # UI functionality
-        self.btnSaveSettings.clicked.connect(self.update_settings)
-        self.btnSaveSettings.clicked.connect(self.close)
-
-    def showEvent(self, event):
-        """
-        Read settings from settings.json and fill UI
-        """
-
-        self.linProjectFolder.setText(settings_data.project_root)
-        self.linVersionedPages.setText(settings_data.versioned_pages)
-        self.linFinalPages.setText(settings_data.final_pages)
-        self.linPDFfiles.setText(settings_data.pdf_files)
-        self.linSQLfile.setText(settings_data.sql_file_path)
-
-    def update_settings(self):
-        """
-        Save edited strings to settings.json
-        """
-
-        self.parent.update_settings(self.linProjectFolder.text(),
-                                    self.linVersionedPages.text(),
-                                    self.linFinalPages.text(),
-                                    self.linPDFfiles.text(),
-                                    self.linSQLfile.text())
 
 
 class AlignDelegate(QtWidgets.QItemDelegate):
@@ -186,14 +147,13 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         # SETUP UI
         self.setupUi(self)
 
-        # Setup pages table
-        self.tabPages.verticalHeader().hide()
-        self.tabPages.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        self.tabPages.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        self.tabPages.horizontalHeader().setStretchLastSection(True)
-        self.tabPages.setItemDelegate(AlignDelegate())
-
         # Data
+        self.settings_file = '{}/data/settings.json'.format(assembler_root)
+        self.sql_file_path = None
+        self.settings = None
+        self.project_root = None
+        self.versioned_pages = None
+        self.final_pages = None
         self.book = None
         self.book_model = None
         self.current_version = None  # UI [ +/- ] counter for selected page
@@ -201,11 +161,16 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         # Populate data
         self.init_ui()
 
+        # Init database
+        if not os.path.exists(self.sql_file_path):
+            init.build_database(self.sql_file_path)
+
         # Setup UI
-        self.actionSettings.triggered.connect(self.edit_settings)
         self.actionDocumentation.triggered.connect(self.help)
 
         self.tabPages.clicked.connect(self.show_page)
+
+        self.btnSetProject.clicked.connect(self.set_project)
 
         self.btnUpVersion.clicked.connect(lambda: self.show_page(1))
         self.btnDownVersion.clicked.connect(lambda: self.show_page(-1))
@@ -215,12 +180,65 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.btnGeneratePDF.clicked.connect(self.generate_pdf)
 
     # UI setup
+    def set_project(self):
+        """
+        Select root folder for current project
+        """
+
+        project_root = QtWidgets.QFileDialog.getExistingDirectory(self, 'Set Project', self.project_root)
+
+        # Save new settings and update UI
+        if project_root:
+            project_root = project_root.replace('\\', '/')
+
+            # Load settings
+            with open(self.settings_file, 'r') as file_content:
+                settings = json.load(file_content)
+
+            settings['project_root']['string'] = project_root
+
+            with open(self.settings_file, 'w') as file_content:
+                json.dump(settings, file_content, indent=4)
+
+            self.init_ui()
+
+    def apply_settings(self):
+        """
+        Get and populate settings
+        """
+
+        with open(self.settings_file, 'r') as file_content:
+            settings_data = json.load(file_content)
+
+        self.settings = settings_data
+        self.project_root = self.settings['project_root']['string']
+
+        versioned_pages = self.settings["versioned_pages"]["string"].format(self.project_root)
+        final_pages = self.settings["final_pages"]["string"].format(self.project_root)
+        sql_file_path = self.settings["sql_file_path"]["string"].format(assembler_root)
+
+        self.versioned_pages = versioned_pages
+        self.final_pages = final_pages
+        self.sql_file_path = sql_file_path
+
+        self.linCurrentProject.setText(self.project_root)
+
     def init_ui(self):
         """
         Read data from database, read files from disc, output data to UI
         """
 
-        page_files = glob.glob('{0}/*.jpg'.format(settings_data.versioned_pages))
+        # Setup pages table
+        self.tabPages.verticalHeader().hide()
+        self.tabPages.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.tabPages.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.tabPages.horizontalHeader().setStretchLastSection(True)
+        self.tabPages.setItemDelegate(AlignDelegate())
+
+        self.apply_settings()
+
+        # Get pages and display in UI
+        page_files = glob.glob(f'{self.versioned_pages}/*.jpg')
         self.book = database.Book(page_files)
         self.book.get_pages()
 
@@ -244,7 +262,7 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         :return: string path to page file, None if JPG does not exists
         """
 
-        jpg_path = '{0}/{1}_{2}.jpg'.format(settings_data.versioned_pages, page_number, version)
+        jpg_path = '{0}/{1}_{2}.jpg'.format(self.versioned_pages, page_number, version)
 
         if not os.path.exists(jpg_path):
             return
@@ -256,8 +274,8 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         Copy versioned files to "to_layout" folder without version
         """
 
-        file_path_src = '{0}/{1}_{2}.jpg'.format(settings_data.versioned_pages, page.page_number, published_version)
-        file_path_out = '{0}/{1}.jpg'.format(settings_data.final_pages, page.page_number)
+        file_path_src = '{0}/{1}_{2}.jpg'.format(self.versioned_pages, page.page_number, published_version)
+        file_path_out = '{0}/{1}.jpg'.format(self.final_pages, page.page_number)
 
         copyfile(file_path_src, file_path_out)
 
@@ -299,14 +317,6 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         settings.set_settings(project_folder, versioned_pages, final_pages, pdf_files, sql_file_path)
 
     # UI calls
-    def edit_settings(self):
-        """
-        Launch Edit Setting window
-        """
-
-        settings_ui = SettingsUI(self)
-        settings_ui.show()
-
     def show_page(self, shift=None):
         """
         Display image in UI
@@ -444,24 +454,17 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.statusbar.showMessage('Building PDF file...')
 
         # Create a folder for PDF files:
-        if not os.path.exists(settings_data.pdf_files):
-            os.makedirs(settings_data.pdf_files)
+        if not os.path.exists(self.pdf_files):
+            os.makedirs(self.pdf_files)
 
         # Build pdf
-        path_pdf = '{0}/workbook_{1}.pdf'.format(settings_data.pdf_files, self.linPDFVersion.text())
+        path_pdf = '{0}/workbook_{1}.pdf'.format(self.pdf_files, self.linPDFVersion.text())
         pdf.generate_pdf(self.book, path_pdf)
 
         self.statusbar.showMessage('PDF file saved at {}'.format(path_pdf))
 
 
 if __name__ == "__main__":
-
-    # Read settings from JSON file
-    settings_data = settings.get_settings()
-
-    # Init database
-    if not os.path.exists(settings_data.sql_file_path):
-        init.build_database(settings_data.sql_file_path)
 
     # Launch the Book Assembler application
     app = QtWidgets.QApplication([])

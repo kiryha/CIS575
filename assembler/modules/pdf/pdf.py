@@ -3,7 +3,6 @@ Generate PDF file from published JPG files
 """
 
 from reportlab.pdfgen import canvas
-from modules.settings import settings
 
 
 def add_page_number(pdf_file, num, page):
