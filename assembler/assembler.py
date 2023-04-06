@@ -14,6 +14,7 @@ from ui import ui_assembler_main
 
 from modules.database import init
 from modules.database import database
+from modules.settings import settings
 from modules.pdf import pdf
 
 assembler_root = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
@@ -148,9 +149,8 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.setupUi(self)
 
         # Data
-        self.settings_file = '{}/data/settings.json'.format(assembler_root)
-        self.sql_file_path = None
         self.settings = None
+        self.sql_file_path = None
         self.project_root = None
         self.versioned_pages = None
         self.final_pages = None
@@ -191,37 +191,16 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         if project_root:
             project_root = project_root.replace('\\', '/')
 
-            # Load settings
-            with open(self.settings_file, 'r') as file_content:
-                settings = json.load(file_content)
-
-            settings['project_root']['string'] = project_root
-
-            with open(self.settings_file, 'w') as file_content:
-                json.dump(settings, file_content, indent=4)
+            self.settings.set_project_root(project_root)
 
             self.init_ui()
 
     def apply_settings(self):
-        """
-        Get and populate settings
-        """
 
-        with open(self.settings_file, 'r') as file_content:
-            settings_data = json.load(file_content)
-
-        self.settings = settings_data
-        self.project_root = self.settings['project_root']['string']
-
-        versioned_pages = self.settings["versioned_pages"]["string"].format(self.project_root)
-        final_pages = self.settings["final_pages"]["string"].format(self.project_root)
-        sql_file_path = self.settings["sql_file_path"]["string"].format(assembler_root)
-
-        self.versioned_pages = versioned_pages
-        self.final_pages = final_pages
-        self.sql_file_path = sql_file_path
-
-        self.linCurrentProject.setText(self.project_root)
+        self.sql_file_path = self.settings.get_sql_file_path()
+        self.project_root = self.settings.get_project_root()
+        self.versioned_pages = self.settings.get_versioned_pages()
+        self.final_pages = self.settings.get_final_pages()
 
     def init_ui(self):
         """
@@ -235,10 +214,13 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.tabPages.horizontalHeader().setStretchLastSection(True)
         self.tabPages.setItemDelegate(AlignDelegate())
 
+        # Load data
+        self.settings = settings.Settings(assembler_root)
         self.apply_settings()
+        self.linCurrentProject.setText(self.project_root)
 
         # Get pages and display in UI
-        page_files = glob.glob(f'{self.versioned_pages}/*.jpg')
+        page_files = glob.glob(f'{self.settings.get_versioned_pages()}/*.jpg')
         self.book = database.Book(page_files)
         self.book.get_pages()
 

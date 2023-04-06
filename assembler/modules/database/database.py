@@ -6,9 +6,12 @@ Classes for database tables
 
 import os
 import sqlite3
+from modules.settings import settings
+
+# Get SQL file path from settings
 assembler_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))).replace('\\', '/')
-sql_file_path = f'{assembler_root}/data/database.db'
-# TODO: get from settings dynamically
+settings = settings.Settings(assembler_root)
+sql_file_path = settings.get_sql_file_path()
 
 
 class Converter:
