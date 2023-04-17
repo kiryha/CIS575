@@ -1,3 +1,3 @@
 set PYTHONPATH=%cd%\modules
 
-"E:\projects\Python27\python.exe" %cd%\assembler.py
+"C:\Users\kko8\AppData\Local\Programs\Python\Python310\python.exe" %cd%\assembler.py

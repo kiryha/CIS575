@@ -23,7 +23,7 @@ def add_page_number(pdf_file, num, page):
     pdf_file.drawString(pos_x, 20, page.page_number)
 
 
-def generate_pdf(book, path_pdf):
+def generate_pdf(book, path_pdf, versioned_pages):
     """
     Generate PDF file from book pages
 
@@ -47,10 +47,7 @@ def generate_pdf(book, path_pdf):
         if not version:
             continue
 
-        # Read settings from JSON file
-        settings_data = settings.get_settings()
-
-        jpg_path = '{0}/{1}_{2}.jpg'.format(settings_data.versioned_pages, page.page_number, version)
+        jpg_path = '{0}/{1}_{2}.jpg'.format(versioned_pages, page.page_number, version)
         pdf_file.drawImage(jpg_path, 0, 0, size_x, size_y)
         add_page_number(pdf_file, num, page)
 

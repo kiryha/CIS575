@@ -22,11 +22,13 @@ class Settings:
         sql_file_path = self.current_settings["sql_file_path"]["string"].format(self.assembler_root)
         versioned_pages = self.current_settings["versioned_pages"]["string"].format(project_root)
         final_pages = self.current_settings["final_pages"]["string"].format(project_root)
+        pdf_files = self.current_settings["pdf_files"]["string"].format(project_root)
 
         # Set current data
         self.current_settings["sql_file_path"]["string"] = sql_file_path
         self.current_settings["versioned_pages"]["string"] = versioned_pages
         self.current_settings["final_pages"]["string"] = final_pages
+        self.current_settings["pdf_files"]["string"] = pdf_files
 
     def load_settings(self):
         """
@@ -59,6 +61,10 @@ class Settings:
     def get_final_pages(self):
 
         return self.current_settings["final_pages"]["string"]
+
+    def get_pdf_files(self):
+
+        return self.current_settings["pdf_files"]["string"]
 
     def set_project_root(self, project_root):
 

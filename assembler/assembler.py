@@ -154,6 +154,7 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.project_root = None
         self.versioned_pages = None
         self.final_pages = None
+        self.pdf_files = None
         self.book = None
         self.book_model = None
         self.current_version = None  # UI [ +/- ] counter for selected page
@@ -201,6 +202,7 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.project_root = self.settings.get_project_root()
         self.versioned_pages = self.settings.get_versioned_pages()
         self.final_pages = self.settings.get_final_pages()
+        self.pdf_files = self.settings.get_pdf_files()
 
     def init_ui(self):
         """
@@ -441,7 +443,8 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
 
         # Build pdf
         path_pdf = '{0}/workbook_{1}.pdf'.format(self.pdf_files, self.linPDFVersion.text())
-        pdf.generate_pdf(self.book, path_pdf)
+        print(path_pdf)
+        pdf.generate_pdf(self.book, path_pdf, self.versioned_pages)
 
         self.statusbar.showMessage('PDF file saved at {}'.format(path_pdf))
 
