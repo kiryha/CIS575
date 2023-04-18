@@ -347,7 +347,8 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
 
         pixmap = QtGui.QPixmap(jpg_path)
         height = self.grp_images.height() - 40  # Get height of groupBox parent widget and scale JPG to fit it
-        self.labPage.resize(height/1.295, height)
+        aspect_ratio = float(pixmap.height()) / pixmap.width()
+        self.labPage.resize(height/aspect_ratio, height)
         self.labPage.setPixmap(pixmap.scaled(self.labPage.size(), QtCore.Qt.IgnoreAspectRatio))
 
         # Report page number and version shown
