@@ -5,7 +5,6 @@ Book Assembler main module
 
 import os
 import glob
-import json
 import webbrowser
 from shutil import copyfile
 from PySide2 import QtCore, QtGui, QtWidgets
@@ -162,15 +161,9 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         # Populate data
         self.init_ui()
 
-        # Init database
-        if not os.path.exists(self.sql_file_path):
-            init.build_database(self.sql_file_path)
-
-        # Setup UI
+        # Setup UI calls
         self.actionDocumentation.triggered.connect(self.help)
-
         self.tabPages.clicked.connect(self.show_page)
-
         self.btnSetProject.clicked.connect(self.set_project)
 
         self.btnUpVersion.clicked.connect(lambda: self.show_page(1))
@@ -220,6 +213,10 @@ class Assembler(QtWidgets.QMainWindow, ui_assembler_main.Ui_Assembler):
         self.settings = settings.Settings(assembler_root)
         self.apply_settings()
         self.linCurrentProject.setText(self.project_root)
+
+        # Init database
+        if not os.path.exists(self.sql_file_path):
+            init.build_database(self.sql_file_path)
 
         # Get pages and display in UI
         page_files = glob.glob(f'{self.settings.get_versioned_pages()}/*.jpg')

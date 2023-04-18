@@ -26,10 +26,6 @@ def add_page_number(pdf_file, num, page):
 def generate_pdf(book, path_pdf, versioned_pages):
     """
     Generate PDF file from book pages
-
-    :param book:
-    :param path_pdf:
-    :return:
     """
 
     size_x = 2598
