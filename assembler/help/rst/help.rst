@@ -30,13 +30,54 @@ The Book Assembler UI description.
 .. image:: images/main_window.jpg
   :target: _images/main_window.jpg
 
+Installation and Launch
+-----------------------
+Place the Book Assembler package to any folder on your local drive.
+Double click the launch_assembler.bat file to run application. The Book Assembler Main window will appear.
+
+Project Structure and Naming Conventions
+----------------------------------------
+Any book project should contain:
+
+- `<project root>/pages/jpg` folder. Place pages files here.
+- `<project root>/pages/jpg/final` folder. Assembler copy published pages without extension here.
+- `<project root>/pages/pdf` folder. PDF files crested here.
+
+Page file should be named: `<page_number>_<version>.jpg`
+
+
 Menu
 ----
-Book Assembler contains Edit > Modify Settings and Help > Documentation items.
+Book Assembler contains Help > Documentation item.
+
+This will open Default Web browser with HTML Documentation page.
 
 Main area
 ---------
-The Book Assembler UI contains two parts, *Pages* and *Page Preview*
+The Book Assembler UI contains two parts, *Current Project/Project Pages* and *Page Preview*
+
+To define the current project to work with, click "Set Project" button, navigate to the folder with current book
+and press `Select Folder`. The Book Assembler will read existing pages and display the list in `Project Pages` table.
+
+`Project Pages` table contains columns:
+
+- Number: page number/name
+- Pub: page published version
+- Sent: page version sent to final folder
+- Description: user note about page
+
+`[ + ] and [ - ]`: Increase or Decrease version of selected page
+
+
+`Publish Current Version`: Record current version as final into the database
+
+`Reload Pages`: Update application UI if added a new pages to folder
+
+`[ SEL ] Sent Published Versions`: Copy published pages to final folder without extension. If `SEL` activated, copy only pages,
+selected in UI.
+
+`[ pdf version ] Generate PDF File`: Create PDF file of all published pages.
+
 
 Status line
 -----------
