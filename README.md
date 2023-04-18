@@ -1,5 +1,14 @@
 # CIS575
 Software Engineering Management
 
-pip install reportlab
-"C:/Users/kko8/OneDrive/projects/master/CIS575/projects/workbook"
+#### Class Project
+Task: create an arbitrary application going through all phases of a life cycle: 
+
+- Requirements, 
+- Analysis,  
+- Design,  
+- Development,  
+- Testing,  
+- Report
+
+The corresponding documents located in the documentation folder.
